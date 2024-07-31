@@ -1,0 +1,66 @@
+{
+	"name": "Vscode-k8s POC container",
+	"build": {
+		"context": "..",
+		"dockerfile": "./Dockerfile.devcontainer",
+		"args": {
+			// "BUILDKIT_INLINE_CACHE": "0",
+			"VERSION": "0-18"
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+		"ghcr.io/rio/features/k9s:1": {}
+	},
+	"overrideFeatureInstallOrder": [
+		"ghcr.io/devcontainers/features/docker-in-docker",
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube",
+		"ghcr.io/rio/features/k9s"
+	],
+	"mounts": [
+		{
+			"source": "projectname-bashhistory",
+			"target": "/commandhistory",
+			"type": "volume"
+		},
+		{
+			"source": "${env:HOME}/.kube",
+			"target": "/home/node/.kube",
+			"type": "bind"
+		}
+	],
+	"remoteEnv": {
+		"HOST_HOME": "${env:HOME}"
+	},
+	"runArgs": [
+		// "--init",
+	
+		// "--cap-add=SYS_PTRACE",
+		// "--cap-add=NET_ADMIN",
+		// "--cap-add=NET_BIND_SERVICE",
+		// "--network=host",
+		// // Uncomment the next line if you will be using a ptrace-based debugger like C++, Go, and Rust.
+		// "--privileged",
+		// "--security-opt",
+		// "seccomp=unconfined"
+	  ],
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"vs-kubernetes": {
+					"checkForMinikubeUpgrade": false
+					// "vs-kubernetes.kubeconfig": ""
+				}
+				// "vsdocker.imageUser": "docker.io/ypolosov"
+				// "vscode-kubernetes.helm-path": ""
+			},
+			"extensions": [
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"mindaro.mindaro"
+			]
+		}
+	},
+	"remoteUser": "node"
+}
